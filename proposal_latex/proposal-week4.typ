@@ -124,20 +124,49 @@ synthetic_data.to_csv('output/synthetic_telco_churn.csv', index=False)
 == 3.1 Proses Training
 Proses pelatihan berjalan lancar dengan indikator _loss_ untuk Generator dan Discriminator yang terpantau stabil selama 100 epoch.
 
-// #figure(
-//   image("training-process.png", width: 80%),
-//   caption: [Log Proses Training CTGAN]
-// )
-// *Catatan: Masukkan screenshot output cell training di sini.*
+#codly(languages: codly-languages)
+```text
+--- 2. Training CTGAN Model ---
+Metadata terdeteksi:
+{
+  'METADATA_SPEC_VERSION': 'SINGLE_TABLE_V1', 
+  'columns': {
+    'gender': {'sdtype': 'categorical'}, 
+    'SeniorCitizen': {'sdtype': 'categorical'}, 
+    ...
+    'Churn': {'sdtype': 'categorical'}
+  }
+}
+
+Gen. (-1.69) | Discrim. (-0.02): 100%|██████████| 100/100 [01:22<00:00,  1.22it/s]
+Pelatihan model selesai.
+```
 
 == 3.2 Sampel Data Sintetis
-Berikut adalah cuplikan 5 baris pertama dari dataset sintetis yang berhasil dibangkitkan. Data ini memiliki struktur kolom yang sama persis dengan data asli (kecuali `customerID` yang memang sengaja tidak dibangkitkan).
+Berikut adalah cuplikan 5 baris pertama dari dataset sintetis yang berhasil dibangkitkan.
 
-// #figure(
-//   image("synthetic-data-preview.png", width: 90%),
-//   caption: [Preview Dataset Sintetis Hasil Generasi]
-// )
-// *Catatan: Masukkan screenshot df.head() di sini.*
+#figure(
+  text(size: 7pt)[
+    #table(
+      columns: (auto,) * 20,
+      inset: 3pt,
+      align: center + horizon,
+      table.header(
+        [*Gen*], [*Snr*], [*Ptn*], [*Dep*], [*Tnr*], [*Phn*], [*Mul*], [*Int*], [*Sec*], [*Bkp*], [*Dev*], [*Tch*], [*TV*], [*Mov*], [*Ctr*], [*Ppr*], [*Pay*], [*Mth*], [*Tot*], [*Chn*]
+      ),
+      [Male], [1], [Yes], [No], [72], [Yes], [No], [DSL], [No], [Yes], [No], [No], [No], [No], [Mth], [Yes], [Mail], [24.7], [776.8], [No],
+      [Fem], [0], [Yes], [No], [72], [Yes], [Yes], [Fbr], [Yes], [Yes], [Yes], [Yes], [Yes], [Yes], [2Yr], [Yes], [Bank], [101.6], [8684], [No],
+      [Male], [1], [Yes], [No], [39], [Yes], [No], [Fbr], [Yes], [Yes], [Yes], [Yes], [No], [Yes], [1Yr], [No], [Elec], [64.0], [2141], [No],
+      [Male], [0], [Yes], [Yes], [8], [Yes], [No], [No], [No], [No], [No], [No], [No], [No], [1Yr], [No], [Mail], [28.7], [18.8], [No],
+      [Fem], [0], [No], [No], [6], [Yes], [No], [DSL], [No], [No], [No], [No], [No], [No], [Mth], [Yes], [Elec], [39.5], [1792], [Yes],
+    )
+  ],
+  caption: [Preview Dataset Sintetis Hasil Generasi (Data disingkat agar muat dalam tabel)]
+)
+
+#text(size: 8pt, style: "italic")[
+  *Keterangan Singkatan:* Gen: Gender, Snr: SeniorCitizen, Ptn: Partner, Dep: Dependents, Tnr: Tenure, Phn: PhoneService, Mul: MultipleLines, Int: InternetService, Sec: OnlineSecurity, Bkp: OnlineBackup, Dev: DeviceProtection, Tch: TechSupport, TV: StreamingTV, Mov: StreamingMovies, Ctr: Contract, Ppr: PaperlessBilling, Pay: PaymentMethod, Mth: MonthlyCharges, Tot: TotalCharges, Chn: Churn.
+]
 
 == 3.3 Output File
 File hasil generasi telah disimpan dengan nama `synthetic_telco_churn.csv` di dalam folder `output/`. File ini siap digunakan untuk tahap evaluasi utilitas dan privasi pada minggu berikutnya.
